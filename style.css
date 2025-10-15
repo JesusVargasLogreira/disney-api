@@ -1,0 +1,234 @@
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --accent:#ffcc00;
+  --muted:#9aa4b2;
+  --success:#26a69a;
+  --danger:#ef5350;
+  --glass: rgba(255,255,255,0.03);
+  --radius:10px;
+  --gap:12px;
+  font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background: linear-gradient(180deg,#071025 0%, #091423 60%);
+  color:#e6eef8;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
+
+/* Layout principal */
+.app {
+  width:100%;
+  max-width:1200px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+/* NAV */
+/* NAV: centrado con buscador a la derecha (inserción dinámica .nav-search) */
+nav{
+  position:relative;
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  align-items:center;
+  padding:8px 12px;
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  /* Reserve space on the right for the absolute search box so it doesn't push/stack buttons */
+  padding-right:340px;
+}
+nav button{
+  background:transparent;
+  color:inherit;
+  border:1px solid rgba(255,255,255,0.04);
+  padding:8px 14px;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .18s;
+}
+nav button:hover{background:linear-gradient(90deg, rgba(255,204,0,0.12), rgba(255,179,0,0.08));box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+
+/* wrapper inserted into nav when #search-container is absent */
+.nav-search{position:absolute;right:16px;top:50%;transform:translateY(-50%);z-index:20}
+.nav-search .c-buscador{width:260px;max-width:260px}
+
+/* Contenedor principal del contenido */
+#root{
+  width:100%;
+  max-width:1200px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  align-items:center;
+  margin:0 auto;
+}
+
+/* Ensure body direct children nav and root share the same centered container behavior
+   and avoid accidental side columns from different sizing */
+body > nav, body > #root {
+  box-sizing: border-box;
+  width:100%;
+  max-width:1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/* Si existe header/search container (compatibilidad), sigue funcionando */
+.app-header{width:100%;display:flex;justify-content:center;padding:6px 0 16px}
+.header-inner{width:100%;max-width:1200px;display:flex;align-items:center;gap:16px;justify-content:center}
+.header-inner nav{flex:1;display:flex;justify-content:center}
+#search-container{width:320px;display:flex;justify-content:flex-end}
+#search-container .c-buscador{max-width:320px}
+
+/* Lista como grid responsivo */
+.lista-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:var(--gap);
+  width:100%;
+  justify-items:center;
+  padding:6px 12px;
+  margin:0 auto; /* center the grid container if it becomes narrower */
+}
+.c-lista-pokemon, .c-item{width:100%;max-width:200px}
+
+/* Contenedores tipo tarjeta */
+.card, .c-trivia{
+  width:100%;
+  max-width:960px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:var(--radius);
+  padding:14px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  border:1px solid rgba(255,255,255,0.03);
+}
+
+.c-lista-pokemon, .c-item{
+  background:var(--card);
+  border-radius:8px;
+  padding:10px;
+  width:180px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.5);
+  cursor:pointer;
+  transition:transform .18s, box-shadow .18s;
+}
+.c-lista-pokemon img, .c-item img{width:100%;height:120px;object-fit:cover;border-radius:6px;margin-bottom:8px}
+.c-lista-pokemon:hover, .c-item:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+
+/* Buscador */
+.c-buscador, .buscador{
+  width:100%;
+  max-width:420px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.04);
+  background:var(--glass);
+  color:inherit;
+  outline:none;
+}
+
+/* Detalle personaje */
+.c-detalle{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  text-align:center;
+}
+.c-detalle img{max-width:320px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)}
+
+/* Favoritos */
+.favorito-btn{background:none;border:none;font-size:20px;color:var(--accent);cursor:pointer}
+
+/* Trivia (mantener estilo original pero adaptado) */
+.trivia-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
+.trivia-header h2{margin:0;font-size:20px}
+.stats{display:flex;gap:12px;color:var(--muted);font-size:14px}
+.stats strong{color:var(--accent)}
+#trivia-contenido{min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;border-radius:8px;background:var(--glass);margin-bottom:12px}
+.carga{color:var(--muted)}
+.error{color:var(--danger)}
+.pregunta{font-weight:600;margin-bottom:10px;color:#eaf6ff;text-align:center}
+.imagen-trivia{border-radius:8px;border:1px solid rgba(255,255,255,0.04);max-height:260px;object-fit:cover;display:block;margin:0 auto 12px}
+.opciones{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;width:100%}
+.btn-opcion{background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit;padding:10px 14px;border-radius:8px;cursor:pointer;min-width:140px;text-align:center;transition:all .18s;box-shadow:inset 0 -2px 0 rgba(0,0,0,0.2)}
+.btn-opcion:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,0.45)}
+.btn-opcion:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-opcion.correct{background:linear-gradient(90deg, rgba(38,166,154,0.14), rgba(38,166,154,0.06));border-color:rgba(38,166,154,0.6);box-shadow:0 8px 30px rgba(38,166,154,0.06)}
+.btn-opcion.wrong{background:linear-gradient(90deg, rgba(239,83,80,0.08), rgba(239,83,80,0.02));border-color:rgba(239,83,80,0.5)}
+.btn-opcion.eliminada{text-decoration:line-through;opacity:.45}
+
+/* Controls */
+.controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.controls .left,.controls .center,.controls .right{display:flex;align-items:center;gap:8px}
+.btn{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:inherit;cursor:pointer}
+.btn.primary{background:linear-gradient(90deg,#ffcc00,#ffb300);color:#061018;border:none}
+.btn.danger{background:transparent;border:1px solid rgba(239,83,80,0.14);color:var(--danger)}
+.btn.small{padding:6px 8px;font-size:13px}
+
+/* Timer */
+.timer{width:200px;background:rgba(255,255,255,0.025);border-radius:999px;padding:6px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.02)}
+.barra-tiempo{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--accent),#ffa100);width:100%;transition:width 0.3s ease}
+#texto-tiempo{position:relative;z-index:2;color:var(--muted);font-weight:600;padding:0 10px}
+
+/* Resultado */
+.resultado{min-height:22px;margin-top:6px;color:var(--muted);font-weight:600}
+
+/* animaciones */
+.fade-in{animation:fadeIn .28s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* responsive */
+@media (max-width:900px){
+  .c-lista-pokemon, .c-item{width:140px}
+  .card, .c-trivia{padding:12px}
+}
+@media (max-width:640px){
+  /* NAV: wrap buttons and push search to new line */
+  nav{flex-wrap:wrap;justify-content:center;padding:8px 10px;gap:8px;padding-right:24px}
+  nav button{padding:6px 10px;font-size:14px}
+
+  /* If the search was inserted as absolute (.nav-search), make it block and full width */
+  .nav-search{position:static;transform:none;width:100%;display:flex;justify-content:center;margin-top:10px;order:99;z-index:1}
+  .nav-search .c-buscador{width:92%;max-width:520px}
+  #search-container{width:100%;display:flex;justify-content:center;margin-top:10px}
+  #search-container .c-buscador{width:92%;max-width:520px}
+
+  /* Improve cards sizing on smaller screens */
+  .lista-cards{grid-template-columns:repeat(2,1fr);gap:12px;padding:6px}
+  .c-lista-pokemon, .c-item{max-width:320px;width:100%}
+
+  .opciones{flex-direction:column}
+  .btn-opcion{min-width:100%}
+  body{padding:16px}
+}
+
+@media (min-width:641px) and (max-width:920px){
+  /* medium screens: keep search absolute but with smaller reserve */
+  nav{padding-right:220px}
+  .nav-search .c-buscador{width:200px}
+}
+
+/* Very small phones: single column */
+@media (max-width:380px){
+  nav button{padding:6px 8px;font-size:13px}
+  .nav-search .c-buscador, #search-container .c-buscador{width:96%}
+  .lista-cards{grid-template-columns:1fr;gap:10px;padding:6px}
+  .c-lista-pokemon, .c-item{max-width:none}
+}

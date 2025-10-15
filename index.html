@@ -1,0 +1,39 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DisneyApi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="uno">
+    <nav>
+        <button onclick="Home()">Home</button>
+        <button onclick="Peliculas()">Peliculas</button>
+        <button onclick="Series()">Series</button>
+        <button onclick="Parques()">Parques</button>
+        <button onclick="Trivia()">Trivia</button>
+        <button onclick="Favoritos()">Favoritos</button>
+    </nav>
+
+    <div id="root">
+        <!-- Aqui se agrega lo que haga en js -->
+    </div>
+    <script src="js/conexion.js"></script>
+    <script src="js/favoritos.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/peliculas.js"></script>
+    <script src="js/series.js"></script>
+    <script src="js/parques.js"></script>
+    <script src="js/personajes.js"></script>
+    <script src="js/trivia.js"></script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", General)
+
+    </script>
+</body>
+
+</html>
