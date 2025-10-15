@@ -19,12 +19,23 @@ body{
   color:#e6eef8;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  /* Prevent Android WebView from auto-zooming text when device font size changes */
+  -webkit-text-size-adjust:100%;
   padding:24px;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:20px;
 }
+
+/* WebView / touch optimizations */
+/* Remove tap highlight on Android, enable touch scrolling for overflow containers */
+html, body, .app, #root { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+body, #root { touch-action: manipulation; }
+.lista-cards, .card, #trivia-contenido { -webkit-overflow-scrolling: touch; }
+
+/* Respect safe area insets (iPhone notch / Android display cutouts when using system UI) */
+body{ padding-left: calc(24px + env(safe-area-inset-left)); padding-right: calc(24px + env(safe-area-inset-right)); }
 
 /* Layout principal */
 .app {
@@ -48,7 +59,9 @@ nav{
   max-width:1200px;
   margin:0 auto;
   /* Reserve space on the right for the absolute search box so it doesn't push/stack buttons */
-  padding-right:340px;
+  /* For WebView on small devices absolute space can be limited; use a CSS variable and clamp for safety */
+  --nav-search-reserve: clamp(120px, 25vw, 340px);
+  padding-right:var(--nav-search-reserve);
 }
 nav button{
   background:transparent;
