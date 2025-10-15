@@ -6,7 +6,7 @@ function generarLista(arrayPersonajes) {
         let imagen = arrayPersonajes[i].imageUrl || "https://via.placeholder.com/100x100?text=No+Image";
 
         listaHTML += `
-        <div class="c-lista-pokemon personaje-${id}" onclick="Personaje('${id}')">
+        <div class="c-lista-pokemon personaje-${id}" data-id="${id}">
             <p>ID: ${id}</p>
             <img src="${imagen}" width="auto" height="80" loading="lazy" alt="${nombre}">
             <p>${nombre}</p>
@@ -75,4 +75,22 @@ function Home() {
 
     // 🔹 Agregar al DOM (lista de personajes abajo)
     document.getElementById("root").appendChild(contenedorChars);
+
+    // Event delegation: handle clicks/taps on cards to open personaje (more reliable in WebView)
+    contenedorChars.addEventListener('click', function (ev) {
+        let node = ev.target;
+        // climb up to .c-lista-pokemon
+        while (node && node !== contenedorChars) {
+            if (node.classList && node.classList.contains('c-lista-pokemon')) {
+                const id = node.getAttribute('data-id');
+                if (id) {
+                    // call global Personaje function
+                    if (typeof Personaje === 'function') Personaje(id);
+                    else console.warn('Personaje function not found');
+                }
+                return;
+            }
+            node = node.parentElement;
+        }
+    });
 }
