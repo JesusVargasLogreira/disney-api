@@ -11,6 +11,24 @@
   font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
 }
 
+/* WebView visual fixes: prefer dark scheme, ensure background and hide duplicate search inputs
+   - color-scheme: helps WebView avoid automatic color transformations (Force Dark)
+   - strong background rules prevent white flashes if WebView applies a default background
+   - hide all .c-buscador/.buscador by default and only show those inside nav-search or #search-container
+*/
+html, body {
+  color-scheme: dark;
+  background: linear-gradient(180deg,#071025 0%, #091423 60%) !important;
+  background-color: #071025 !important;
+}
+
+/* Prevent white flash from transparent areas in some WebViews */
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,#071025 0%, #091423 60%);z-index:-1}
+
+/* Hide duplicate search inputs by default; only show the search when inside the preferred containers */
+.c-buscador, .buscador{ display: none !important; }
+.nav-search .c-buscador, .nav-search .buscador, #search-container .c-buscador, #search-container .buscador{ display: block !important; }
+
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
